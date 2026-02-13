@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的第一個互動網頁</title>
+    <style>
+        /* 這裡是 CSS：負責網頁的「化妝」 */
+        body {
+            font-family: "微軟正黑體", sans-serif;
+            display: flex; /* 讓內容置中 */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 佔滿整個螢幕高度 */
+            margin: 0;
+            background-color: #e0f7fa; /* 預設背景色 */
+            transition: background-color 0.5s; /* 讓變色有動畫效果 */
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px; /* 圓角 */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* 陰影讓它浮起來 */
+            text-align: center;
+            width: 300px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* 讓寬度計算包含框線 */
+        }
+        button {
+            background-color: #ff6b6b;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff5252; /* 滑鼠移過去變深色 */
+        }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>👋 哈囉！</h2>
+        <p>這是我寫的第一個網頁。</p>
+        
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+        <p>🎨 <b>換個心情（背景色）：</b></p>
+        <input type="color" id="colorPicker" value="#e0f7fa">
+
+        <p>🗣️ <b>跟我說話：</b></p>
+        <input type="text" id="textInput" placeholder="在這裡輸入文字...">
+        <button onclick="speak()">播放語音</button>
+    </div>
+
+    <script>
+        // 這裡是 JavaScript：負責網頁的「大腦」
+
+        // 1. 監聽顏色改變
+        let colorPicker = document.getElementById('colorPicker');
+        colorPicker.addEventListener('input', function() {
+            // 把背景顏色改成選到的顏色
+            document.body.style.backgroundColor = colorPicker.value;
+        });
+
+        // 2. 語音功能
+        function speak() {
+            let text = document.getElementById('textInput').value;
+            
+            // 如果沒打字，就預設講這句
+            if (text === "") {
+                text = "請先輸入一點文字，我才能唸出來喔！";
+            }
+
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-TW'; // 設定講中文
+            utterance.rate = 1;       // 語速 (0.1 ~ 10)
+            utterance.pitch = 1;      // 音調 (0 ~ 2)
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+
+</body>
+</html>
